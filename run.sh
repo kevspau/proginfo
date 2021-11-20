@@ -1,2 +1,4 @@
-nim c -d:ssl main.nim
+nim c -d:ssl src/main.nim
+cd src
 ./main
+cd ..

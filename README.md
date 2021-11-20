@@ -7,4 +7,3 @@ This is a tiny little project that provides information on various programming l
 
 
 ### Currently being worked on.
-

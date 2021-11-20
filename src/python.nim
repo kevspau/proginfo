@@ -45,4 +45,4 @@ proc GetPython(client: HttpClient): string =
         v = getPyVersion(client)
         d = getPyDesc(client)
         a = getPyAwesome(client)
-    return "Python - " & d & "\n|- Version " & v & "\n|- " & homepage & "\n|- " & docs & "\n|- " & a & "\n"nim
+    return "Python - " & d & "\n|- Version " & v & "\n|- " & homepage & "\n|- " & docs & "\n|- " & a & "\n"

@@ -1,20 +1,21 @@
 import std/[httpclient, htmlparser, strutils, xmltree, json]
 
-#Gets the latest Nim version through the homepage
-proc getNimVersion(client: HttpClient): string =
-    var req = findAll(parseHtml(client.getContent("https://nim-lang.org/")), "a")
+#Gets the latest Kotlin version through the homepage
+proc getKotVersion(client: HttpClient): string =
+    var req = findAll(parseHtml(client.getContent("https://github.com/JetBrains/kotlin")), "span")
     var version: string
     for v in req:
-        if "class=\"pure-button pure-button-primary\"" in $v:
+        
+        if v.attr("class") == "css-truncate css-truncate-target text-bold mr-2":
             var s = split(innerText(v), " ")
             version = s[len(s)-1]
             break
     
     return version
 
-#Gets the top "Awesome-Nim" list on GitHub
-proc getNimAwesome(client: HttpClient): string =
-    var req = findAll(parseHtml(client.getContent("https://github.com/search?q=awesome+nim")), "a")
+#Gets the top "Awesome-Kotlin" list on GitHub
+proc getKotAwesome(client: HttpClient): string =
+    var req = findAll(parseHtml(client.getContent("https://github.com/search?q=awesome+kotlin")), "a")
     var link: string
     for l in req:
         var a = attr(l, "data-hydro-click")
@@ -27,21 +28,21 @@ proc getNimAwesome(client: HttpClient): string =
                     break
     return link
 
-#Gets the description of Nim through the GitHub topic
-proc getNimDesc(client: HttpClient): string = 
-    var req = findAll(parseHtml(client.getContent("https://github.com/search?q=nim")), "p")
+#Gets the description of Kotlin through the GitHub topic
+proc getKotDesc(client: HttpClient): string = 
+    var req = findAll(parseHtml(client.getContent("https://github.com/search?q=kotlin")), "p")
     var desc: string
     for v in req:
-        if "Nim is a " in $v:
+        if "Kotlin is a " in $v:
             desc = $(v.innerText())
             break
     return desc
 
-proc GetNim(client: HttpClient): string =
+proc GetKotlin(client: HttpClient): string =
     let
-        homepage = "https://nim-lang.org"
-        docs = homepage & "/documentation.html"
-        v = getNimVersion(client)
-        d = getNimDesc(client)
-        a = getNimAwesome(client)
-    return "Nim - " & d & "\n|- Version " & v & "\n|- " & homepage & "\n|- " & docs & "\n|- " & a & "\n"
+        homepage = "https://kotlinlang.org"
+        docs = homepage & "/docs/home.html"
+        v = getKotVersion(client)
+        d = getKotDesc(client)
+        a = getKotAwesome(client)
+    return "Kotlin - " & d & "\n|- Version " & v & "\n|- " & homepage & "\n|- " & docs & "\n|- " & a & "\n"
