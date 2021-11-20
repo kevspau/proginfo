@@ -1,17 +1,5 @@
 import std/[httpclient, htmlparser, strutils, xmltree, json]
 
-#Gets the latest Swift version through the homepage
-proc getSwiVersion(client: HttpClient): string =
-    var req = findAll(parseHtml(client.getContent("https://www.swift.org/download/")), "h3")
-    var version: string
-    for v in req:
-        if v.attr("id") != "" and v.innerText.startsWith("Swift "):
-            let str = $v
-            var t = str.split(" ")
-            version = t[1]
-            break
-    
-    return version
 
 #Gets the top "Awesome-Swift" list on GitHub
 proc getSwiAwesome(client: HttpClient): string =
@@ -38,11 +26,12 @@ proc getSwiDesc(client: HttpClient): string =
             break
     return desc
 
-proc GetSwift(client: HttpClient): string =
+proc GetSwift(): string =
     let
+        client = newHttpClient()
         homepage = "https://www.swift.org"
         docs = homepage & "/documentation"
-        v = getSwiVersion(client)
         d = getSwiDesc(client)
         a = getSwiAwesome(client)
-    return "Swift - " & d & "\n|- Version " & v & "\n|- " & homepage & "\n|- " & docs & "\n|- " & a & "\n"
+    client.close
+    return "Swift - " & d & "\n|- Version {403 Response}\n|- " & homepage & "\n|- " & docs & "\n|- " & a & "\n"

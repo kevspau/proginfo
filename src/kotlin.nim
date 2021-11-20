@@ -38,11 +38,13 @@ proc getKotDesc(client: HttpClient): string =
             break
     return desc
 
-proc GetKotlin(client: HttpClient): string =
+proc GetKotlin(): string =
     let
+        client = newHttpClient()
         homepage = "https://kotlinlang.org"
         docs = homepage & "/docs/home.html"
         v = getKotVersion(client)
         d = getKotDesc(client)
         a = getKotAwesome(client)
+    client.close
     return "Kotlin - " & d & "\n|- Version " & v & "\n|- " & homepage & "\n|- " & docs & "\n|- " & a & "\n"

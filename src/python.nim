@@ -38,11 +38,13 @@ proc getPyDesc(client: HttpClient): string =
             break
     return desc
 
-proc GetPython(client: HttpClient): string =
+proc GetPython(): string =
     let
+        client = newHttpClient()
         homepage = "https://python.org"
         docs = "https://docs.python.org/"
         v = getPyVersion(client)
         d = getPyDesc(client)
         a = getPyAwesome(client)
+    client.close
     return "Python - " & d & "\n|- Version " & v & "\n|- " & homepage & "\n|- " & docs & "\n|- " & a & "\n"

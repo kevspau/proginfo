@@ -38,11 +38,13 @@ proc getGoDesc(client: HttpClient): string =
             break
     return desc
 
-proc GetGolang(client: HttpClient): string =
+proc GetGolang(): string =
     let
+        client = newHttpClient()
         homepage = "https://golang.org"
         docs = homepage & "/doc"
         v = getGoVersion(client)
         d = getGoDesc(client)
         a = getGoAwesome(client)
+    client.close
     return "Go - " & d & "\n|- Version " & v & "\n|- " & homepage & "\n|- " & docs & "\n|- " & a & "\n"

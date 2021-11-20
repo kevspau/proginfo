@@ -37,11 +37,13 @@ proc getNimDesc(client: HttpClient): string =
             break
     return desc
 
-proc GetNim(client: HttpClient): string =
+proc GetNim(): string =
     let
+        client = newHttpClient()
         homepage = "https://nim-lang.org"
         docs = homepage & "/documentation.html"
         v = getNimVersion(client)
         d = getNimDesc(client)
         a = getNimAwesome(client)
+    client.close
     return "Nim - " & d & "\n|- Version " & v & "\n|- " & homepage & "\n|- " & docs & "\n|- " & a & "\n"
