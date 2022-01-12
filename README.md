@@ -1,5 +1,5 @@
 # Programming.info
-### A simple database for programming languages.(And a place to recommend me programming languages lol)
+### A simple database for programming languages.
 
 ## What is it?
 
